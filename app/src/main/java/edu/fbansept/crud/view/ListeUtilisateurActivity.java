@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -45,17 +44,23 @@ public class ListeUtilisateurActivity extends AppCompatActivity {
         UtilisateurController.getInstance().getListeUtilisateur(
                 this,
                 (List<Utilisateur> utilisateurs) -> {
+
+                    //Collections.sort(utilisateurs, (u1,u2)-> u1.getNom().compareTo(u2.getNom()));
+
                     listeUtilisateur.setAdapter(new ListeUtilisateurAdapter(
                             utilisateurs,
-                            this::afficherProfil
+                            (Utilisateur utilisateur) -> afficherProfil(utilisateur)
                     ));
                 }
         );
     }
 
-    void afficherProfil(Utilisateur utilisateur) {
-        Intent intent = new Intent(this, ProfilUtilisateurActivity.class);
+
+    private void afficherProfil(Utilisateur utilisateur) {
+        //startActivity(new Intent(this, ProfilUtilisateurActivity.class));
+        Intent intent = new Intent(this, UtilisateurActivity.class);
         intent.putExtra("utilisateur", utilisateur);
+        intent.putExtra("tarteALaFraise", 42);
         startActivity(intent);
     }
 }
