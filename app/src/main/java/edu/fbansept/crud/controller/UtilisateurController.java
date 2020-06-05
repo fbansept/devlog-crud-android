@@ -131,7 +131,7 @@ public class UtilisateurController {
 
                                     listeUtilisateur.add(utilisateur);
 
-                                    /*JSONArray jsonListeCategories = jsonUser.getJSONArray("commandes");
+                                    /*JSONArray jsonListeCategories = jsonUser.getJSONArray("catregories");
                                     for(int j = 0; j < jsonListeCategories.length(); j++) {
                                         Commande commande = new Commande();
                                         JSONObject jsonCommande = jsonListeCategories.getJSONObject(j);

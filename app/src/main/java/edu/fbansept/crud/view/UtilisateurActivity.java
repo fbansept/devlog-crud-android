@@ -1,10 +1,20 @@
 package edu.fbansept.crud.view;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentManager;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -15,10 +25,16 @@ import com.google.android.gms.maps.model.LatLng;
 import edu.fbansept.crud.R;
 import edu.fbansept.crud.model.Utilisateur;
 
-public class UtilisateurActivity extends AppCompatActivity {
+public class UtilisateurActivity extends AppCompatActivity implements LocationListener {
 
     private SupportMapFragment mapFragment;
     private GoogleMap googleMap;
+
+    private LocationManager locationManager;
+
+    private final int PERMISSION_KEY = 1234;
+
+    private boolean permissionRejete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +43,7 @@ public class UtilisateurActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         Utilisateur utilisateur = (Utilisateur) intent.getSerializableExtra("utilisateur");
-        Toast.makeText(this, utilisateur.getNom(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, utilisateur.getNom(), Toast.LENGTH_SHORT).show();
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);
@@ -35,15 +51,110 @@ public class UtilisateurActivity extends AppCompatActivity {
         telechargeGoogleMap();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+
+        if(!permissionRejete) {
+            verificationPermission();
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private void activationLocation() {
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 0, this);
+        }
+
+        if (locationManager.isProviderEnabled(LocationManager.PASSIVE_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.PASSIVE_PROVIDER, 10000, 0, this);
+        }
+
+        if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 10000, 0, this);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if(requestCode == PERMISSION_KEY) {
+            if(grantResults[0] != PackageManager.PERMISSION_GRANTED || grantResults[1] != PackageManager.PERMISSION_GRANTED) {
+                permissionRejete = true;
+                new AlertDialog.Builder(this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Siwiouplé :'(")
+                        .setMessage("Etes-vous sur de ne pas vouloir utilisé cette super fonctionalite ?")
+                        .setPositiveButton("Ok...je l'active", (dialog, which) -> verificationPermission())
+                        .setNegativeButton("Non vraiment pas merci", (dialog, which) -> {})
+                        .show();
+
+            } else {
+                activationLocation();
+            }
+        }
+    }
+
+    private void verificationPermission() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION},
+                    PERMISSION_KEY
+            );
+        } else {
+            activationLocation();
+        }
+    }
+
     private void telechargeGoogleMap() {
         mapFragment.getMapAsync(
                 map -> {
                     googleMap = map;
                     googleMap.moveCamera(CameraUpdateFactory.zoomTo(10));
-                    LatLng latlng = new LatLng(47.6367, 6.68642);
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
                 }
         );
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        /*Toast.makeText(
+                this,
+                "position : " + location.getLatitude() + " " + location.getLongitude(),
+                Toast.LENGTH_SHORT)
+        .show();*/
+        if(googleMap != null) {
+            LatLng latlng = new LatLng(location.getLatitude(), location.getLongitude());
+            googleMap.moveCamera(CameraUpdateFactory.newLatLng(latlng));
+        }
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        new AlertDialog.Builder(this)
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setTitle("Oups")
+                .setMessage("Attention votre GPS ne marche plus")
+                .setPositiveButton("Ok", (dialog, which) -> {})
+                .show();
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 
 
