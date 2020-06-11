@@ -15,6 +15,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -23,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 
 import edu.fbansept.crud.R;
+import edu.fbansept.crud.controller.ConnexionController;
 import edu.fbansept.crud.model.Utilisateur;
 
 public class UtilisateurActivity extends AppCompatActivity implements LocationListener {
@@ -43,7 +47,25 @@ public class UtilisateurActivity extends AppCompatActivity implements LocationLi
 
         Intent intent = getIntent();
         Utilisateur utilisateur = (Utilisateur) intent.getSerializableExtra("utilisateur");
-        //Toast.makeText(this, utilisateur.getNom(), Toast.LENGTH_SHORT).show();
+
+        TextView textViewPseudo = findViewById(R.id.textViewPseudo);
+        TextView textViewNom = findViewById(R.id.textViewNom);
+        TextView textViewPrenom = findViewById(R.id.textViewPrenom);
+
+        textViewPseudo.setText(utilisateur.getPseudo());
+        textViewNom.setText(utilisateur.getNom());
+        textViewPrenom.setText(utilisateur.getPrenom());
+
+        ImageView imageView_editUtilisateur = findViewById(R.id.imageView_editUtilisateur);
+        ImageView imageView_supprUtilisateur = findViewById(R.id.imageView_supprUtilisateur);
+
+        if(ConnexionController.getInstance().isAdminUtilisateurConnecte(this)){
+            imageView_editUtilisateur.setVisibility(View.VISIBLE);
+            imageView_supprUtilisateur.setVisibility(View.VISIBLE);
+        } else {
+            imageView_editUtilisateur.setVisibility(View.INVISIBLE);
+            imageView_supprUtilisateur.setVisibility(View.INVISIBLE);
+        }
 
         FragmentManager fragmentManager = getSupportFragmentManager();
         mapFragment = (SupportMapFragment) fragmentManager.findFragmentById(R.id.map);

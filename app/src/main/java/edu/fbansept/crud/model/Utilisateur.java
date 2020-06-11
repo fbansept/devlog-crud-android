@@ -3,18 +3,21 @@ package edu.fbansept.crud.model;
 import android.graphics.Bitmap;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Utilisateur implements Serializable {
     private Integer id;
+    private String pseudo;
     private String nom;
     private String prenom;
     private Bitmap image;
 
-    private List<Commande> listeCommande;
+    private List<Role> listeRole = new ArrayList<>();
 
-    public Utilisateur(Integer id, String nom, String prenom) {
+    public Utilisateur(Integer id, String pseudo, String nom, String prenom) {
         this.id = id;
+        this.pseudo = pseudo;
         this.nom = nom;
         this.prenom = prenom;
     }
@@ -25,6 +28,14 @@ public class Utilisateur implements Serializable {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getPseudo() {
+        return pseudo;
+    }
+
+    public void setPseudo(String pseudo) {
+        this.pseudo = pseudo;
     }
 
     public String getNom() {
@@ -51,11 +62,13 @@ public class Utilisateur implements Serializable {
         this.image = image;
     }
 
-    public List<Commande> getListeCommande() {
-        return listeCommande;
+
+
+    public List<Role> getListeRole() {
+        return listeRole;
     }
 
-    public void setListeCommande(List<Commande> listeCommande) {
-        this.listeCommande = listeCommande;
+    public void setListeRole(List<Role> listeRole) {
+        this.listeRole = listeRole;
     }
 }

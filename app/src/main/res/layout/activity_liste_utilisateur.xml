@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/background"
     android:orientation="vertical"
     tools:context=".view.ListeUtilisateurActivity">
 
@@ -16,5 +17,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/liste_utilisateur"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1" />
+
+    <fragment
+        android:id="@+id/menu_fragment3"
+        android:name="edu.fbansept.crud.view.fragment.MenuFragment"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        tools:layout="@layout/fragment_menu" />
 </LinearLayout>

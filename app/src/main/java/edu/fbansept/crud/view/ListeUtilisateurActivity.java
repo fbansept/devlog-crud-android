@@ -23,22 +23,13 @@ public class ListeUtilisateurActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_liste_utilisateur);
 
-        TextView prenom =  findViewById(R.id.prenom);
-        TextView nom =  findViewById(R.id.nom);
+        TextView prenom =  findViewById(R.id.textView_prenom);
+        TextView nom =  findViewById(R.id.textView_pseudo);
 
         RecyclerView listeUtilisateur = findViewById(R.id.liste_utilisateur);
         listeUtilisateur.setLayoutManager(new LinearLayoutManager(this));
         listeUtilisateur.addItemDecoration(
                 new DividerItemDecoration(listeUtilisateur.getContext(), DividerItemDecoration.VERTICAL)
-        );
-
-        UtilisateurController.getInstance().getUtilisateur(
-                this,
-                1,
-                (Utilisateur utilisateur) -> {
-                    prenom.setText(utilisateur.getPrenom());
-                    nom.setText(utilisateur.getNom());
-                }
         );
 
         UtilisateurController.getInstance().getListeUtilisateur(

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.fragment.MenuFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <ImageButton
+        android:id="@+id/imageButton_listeUtilisateur"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:backgroundTint="#DAFFFFFF"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:src="@drawable/ic_wc_black_24dp" />
+
+    <Space
+        android:layout_width="3dp"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/imageButton_info"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:backgroundTint="#DAFFFFFF"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:src="@drawable/ic_info_black_24dp" />
+
+    <Space
+        android:layout_width="3dp"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/imageButton_rapport"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:backgroundTint="#DAFFFFFF"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:src="@drawable/ic_report_black_24dp" />
+
+    <Space
+        android:layout_width="3dp"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/imageButton_voyage"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:backgroundTint="#DAFFFFFF"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:src="@drawable/ic_directions_car_black_24dp" />
+
+    <Space
+        android:layout_width="3dp"
+        android:layout_height="wrap_content" />
+
+    <ImageButton
+        android:id="@+id/imageButton_stats"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:backgroundTint="#DAFFFFFF"
+        android:elevation="@dimen/cardview_default_elevation"
+        android:src="@drawable/ic_assessment_black_24dp" />
+
+</LinearLayout>

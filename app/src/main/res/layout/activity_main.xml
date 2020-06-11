@@ -14,11 +14,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-    <Button
-        android:id="@+id/bouton_liste_utilisateur"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Liste utilisateur" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"></LinearLayout>
+
+    <fragment
+        android:id="@+id/menu_fragment"
+        android:name="edu.fbansept.crud.view.fragment.MenuFragment"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        tools:layout="@layout/fragment_menu" />
 
     <!--Button
         android:id="@+id/button"

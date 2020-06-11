@@ -10,7 +10,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
 public class RequestManager {
-    public static final String url = "http://192.168.0.50:8080/";
+    public static final String url = "http://192.168.24.65:8080/";
     //public static final String url = "https://atosdevbackend.herokuapp.com/api/";
     private static RequestManager instance;
     private RequestQueue requestQueue;

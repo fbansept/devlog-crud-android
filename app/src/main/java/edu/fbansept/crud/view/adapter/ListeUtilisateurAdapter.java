@@ -3,7 +3,7 @@ package edu.fbansept.crud.view.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,26 +23,26 @@ public class ListeUtilisateurAdapter extends RecyclerView.Adapter
         void onClicUtilisateur(Utilisateur item);
     }
 
-    List<Utilisateur> listeUtilisateur;
+    private List<Utilisateur> listeUtilisateur;
 
     public ListeUtilisateurAdapter(List<Utilisateur> listeUtilisateur, EcouteurClicUtilisateur ecouteur) {
         this.ecouteur = ecouteur;
         this.listeUtilisateur = listeUtilisateur;
     }
 
-    public static class UtilisateurViewHolder extends RecyclerView.ViewHolder {
+    static class UtilisateurViewHolder extends RecyclerView.ViewHolder {
 
-        TextView nom;
-        TextView prenom;
-        Button bouton;
+        TextView textViewPseudo;
+        TextView textViewNom;
+        TextView textViewPrenom;
+        LinearLayout layoutItem;
 
-        public UtilisateurViewHolder(View itemView){
+        UtilisateurViewHolder(View itemView){
             super(itemView);
-            //TODO récupérer les composants ici (TextView , button ...)
-
-            nom = itemView.findViewById(R.id.nom);
-            prenom = itemView.findViewById(R.id.prenom);
-            bouton = itemView.findViewById(R.id.button);
+            textViewPseudo = itemView.findViewById(R.id.textView_pseudo);
+            textViewNom = itemView.findViewById(R.id.textView_nom);
+            textViewPrenom = itemView.findViewById(R.id.textView_prenom);
+            layoutItem = itemView.findViewById(R.id.layout_item);
         }
     }
 
@@ -50,17 +50,17 @@ public class ListeUtilisateurAdapter extends RecyclerView.Adapter
     @Override
     public UtilisateurViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_utilisateur,parent,false);
-        UtilisateurViewHolder utilisateurViewHolder = new UtilisateurViewHolder(view);
-        return utilisateurViewHolder;
+        return new UtilisateurViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull UtilisateurViewHolder holder, int position) {
         Utilisateur utilisateur = listeUtilisateur.get(position);
-        holder.prenom.setText(utilisateur.getPrenom());
-        holder.nom.setText(utilisateur.getNom());
+        holder.textViewPseudo.setText(utilisateur.getPseudo());
+        holder.textViewPrenom.setText(utilisateur.getPrenom());
+        holder.textViewNom.setText(utilisateur.getNom());
 
-        holder.bouton.setOnClickListener( v ->
+        holder.layoutItem.setOnClickListener( v ->
                 ecouteur.onClicUtilisateur(utilisateur)
         );
     }
